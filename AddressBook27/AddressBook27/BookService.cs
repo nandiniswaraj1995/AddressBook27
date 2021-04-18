@@ -13,6 +13,11 @@ namespace AddressBook27
 
         public void addDetails(string bookName)
         {
+            if (!contactRepo.GetBookByName(bookName))
+            {
+                contactRepo.AddBook(bookName);
+            }
+
             Console.WriteLine("Enter First Name:");
             contactModel.firstName = Console.ReadLine();
             Console.WriteLine("Enter Last Name");

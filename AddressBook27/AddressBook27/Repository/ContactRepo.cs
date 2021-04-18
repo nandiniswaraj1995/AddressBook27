@@ -10,6 +10,81 @@ namespace AddressBook27.Repository
     {
         public static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=addressBook27DB;Integrated Security=True";
 
+
+        public bool GetBookByName(string bookName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                ContactModel model = new ContactModel();
+                using (connection)
+                {
+                    string query = @"Select * from book;";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            model.bookName = dr.GetString(1);
+                          
+                            if (model.bookName == bookName)
+                            {
+                                return true;
+                            }
+                            /*  else if (model.bookName == bookModel.bookName && model.bookType != bookModel.bookType)
+                              {
+                                  Console.WriteLine("bookType Mismatch!");
+                              }*/
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return false;
+        }
+
+        public bool AddBook(string bookName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("sp_AddBook", connection);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@book_name", bookName);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
+
+
+
+
         public bool AddContact(ContactModel model)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -18,7 +93,7 @@ namespace AddressBook27.Repository
             {
                 using (connection)
                 {
-                    SqlCommand command = new SqlCommand("sp_AddContact", connection);
+                    SqlCommand command = new SqlCommand("sp_AddContactInotBook", connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@first_name", model.firstName);
                     command.Parameters.AddWithValue("@last_name", model.lastName);
@@ -62,7 +137,7 @@ namespace AddressBook27.Repository
                 ContactModel model = new ContactModel();
                 using (connection)
                 {
-                    string query = @"Select * from address_book;";
+                    string query = @"Select * from contact;";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
@@ -98,7 +173,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New Name");
             string newName = Console.ReadLine();
-            string query = @"update address_book set first_name = '" + newName + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set first_name = '" + newName + "' where first_name = '" + firstName + "';";
             Console.WriteLine(query);
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
@@ -121,7 +196,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New Last Name");
             string newLastName = Console.ReadLine();
-            string query = @"update address_book set last_name = '" + newLastName + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set last_name = '" + newLastName + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -142,7 +217,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New Address");
             string newAddress = Console.ReadLine();
-            string query = @"update address_book set address = '" + newAddress + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set address = '" + newAddress + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -164,7 +239,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New City");
             string newCity = Console.ReadLine();
-            string query = @"update address_book set city = '" + newCity + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set city = '" + newCity + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -186,7 +261,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New State");
             string newState = Console.ReadLine();
-            string query = @"update address_book set state = '" + newState + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set state = '" + newState + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -207,7 +282,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New Zip Code");
             string newZip = Console.ReadLine();
-            string query = @"update address_book set zip = '" + newZip + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set zip = '" + newZip + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -228,7 +303,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New Phone Number");
             string newPhoneNumner = Console.ReadLine();
-            string query = @"update address_book set phone_number = '" + newPhoneNumner + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set phone_number = '" + newPhoneNumner + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -249,7 +324,7 @@ namespace AddressBook27.Repository
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Enter New Email");
             string newEmail = Console.ReadLine();
-            string query = @"update address_book set email = '" + newEmail + "' where first_name = '" + firstName + "';";
+            string query = @"update contact set email = '" + newEmail + "' where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -268,7 +343,7 @@ namespace AddressBook27.Repository
         internal void DeleteContact(string firstName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-            string query = @"delete from address_book  where first_name = '" + firstName + "';";
+            string query = @"delete from contact  where first_name = '" + firstName + "';";
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
