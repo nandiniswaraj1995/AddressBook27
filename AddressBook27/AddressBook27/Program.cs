@@ -17,6 +17,7 @@ namespace AddressBook27
                 Console.WriteLine("2.Edit Existing Contact By First Name");
                 Console.WriteLine("3.Delete Contact By First Name");
                 Console.WriteLine("4.Search person by city or state in all address book");
+                Console.WriteLine("5.count total person by city or state");
                 Console.WriteLine("0.close");
                 Console.WriteLine("Enter your choice");
                 choice = Console.ReadLine();
@@ -51,7 +52,24 @@ namespace AddressBook27
                         {
                             Console.WriteLine("Enter state");
                             model.state = Console.ReadLine();
-                            service.searchPersonAccrossCityOrState(model.city);
+                            service.searchPersonAccrossCityOrState(model.state);
+
+                        }
+                        break;
+                    case "5":
+                        Console.WriteLine("Enter choice 1.count persons by city     2.count persons by state");
+                        int choice2 = Convert.ToInt32(Console.ReadLine());
+                        if (choice2 == 1)
+                        {
+                            Console.WriteLine("Enter city");
+                            model.city = Console.ReadLine();
+                            service.countPersonAccrossCityOrState(model.city, choice2);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter state");
+                            model.state = Console.ReadLine();
+                            service.countPersonAccrossCityOrState(model.state, choice2);
 
                         }
                         break;

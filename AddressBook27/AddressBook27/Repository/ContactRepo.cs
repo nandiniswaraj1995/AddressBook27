@@ -438,6 +438,29 @@ namespace AddressBook27.Repository
 
         }
 
+        public void countPersonAccrossCityOrState(string cityOrState , int choice)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            if (choice == 1)
+            {
+                string query = @"Select count(city) from contact where city = '" + cityOrState + "';";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                connection.Open();
+                var totalPerson = cmd.ExecuteScalar().ToString();
+               Console.WriteLine("totalPerson in city : " + totalPerson);
+            }
+            else
+            {
+                string query = @"Select count(state) from contact where state = '" + cityOrState + "' ;";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                connection.Open();
+                var totalPerson = cmd.ExecuteScalar().ToString();
+               Console.WriteLine("totalPerson in state : " + totalPerson);
+
+            }
+        }
+                 
+        
 
 
 

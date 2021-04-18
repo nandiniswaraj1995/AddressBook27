@@ -121,6 +121,11 @@ namespace AddressBook27
             contactRepo.searchPersonAccrossCityOrState(cityOrState);
         }
 
+        public void countPersonAccrossCityOrState(string cityOrState , int choice)
+        {
+            contactRepo.countPersonAccrossCityOrState(cityOrState , choice);
+        }
+
 
 
 
