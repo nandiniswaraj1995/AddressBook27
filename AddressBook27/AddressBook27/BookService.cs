@@ -90,7 +90,19 @@ namespace AddressBook27
                 }
 
             }
+        }
 
+
+        public void deleteContact(string firstName)
+        {
+            if (!contactRepo.isPersonNameValid(firstName))
+            {
+                Console.WriteLine("Person  Not Exist");
+            }
+            else
+            {
+                contactRepo.DeleteContact(firstName);
+            }
 
         }
     }

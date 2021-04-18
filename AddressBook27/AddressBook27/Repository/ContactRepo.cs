@@ -262,6 +262,25 @@ namespace AddressBook27.Repository
             {
                 Console.WriteLine("Something went wrong!");
             }
+        }
+
+
+        internal void DeleteContact(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            string query = @"delete from address_book  where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Deleted Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
 
         }
 

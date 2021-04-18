@@ -15,6 +15,7 @@ namespace AddressBook27
             {
                 Console.WriteLine("1.AddPerson");
                 Console.WriteLine("2.Edit Existing Contact By First Name");
+                Console.WriteLine("3.Delete Contact By First Name");
                 Console.WriteLine("0.close");
                 Console.WriteLine("Enter your choice");
                 choice = Console.ReadLine();
@@ -30,6 +31,11 @@ namespace AddressBook27
                         Console.WriteLine("Enter person's Fisrt name whose data want to edit");
                         model.firstName = Console.ReadLine();
                         service.editContact(model.firstName);
+                        break;
+                    case "3":
+                        Console.WriteLine("Enter person's Fisrt name whose data want to delete");
+                        model.firstName = Console.ReadLine();
+                        service.deleteContact(model.firstName);
                         break;
 
                     case "0":
