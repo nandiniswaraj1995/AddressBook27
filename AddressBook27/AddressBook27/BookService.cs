@@ -35,5 +35,63 @@ namespace AddressBook27
                 Console.WriteLine("Records added successfully");
 
         }
+
+
+        internal void editContact(string firstName)
+        {
+            if (!contactRepo.isPersonNameValid(firstName))
+            {
+                Console.WriteLine("Person  Not Exist");
+            }
+            else
+            {
+                ContactModel contactModel = new ContactModel();
+                Console.WriteLine("which data you want to edit please enter your choice");
+                Console.WriteLine("1.first Name");
+                Console.WriteLine("2.last Name");
+                Console.WriteLine("3.address");
+                Console.WriteLine("4.city ");
+                Console.WriteLine("5.state");
+                Console.WriteLine("6.zip code");
+                Console.WriteLine("7.phone number");
+                Console.WriteLine("8.email");
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+
+                    case "1":
+                        contactRepo.updateFirstName(firstName);
+                        break;
+                    case "2":
+                        contactRepo.updateLastName(firstName);
+                        break;
+                    case "3":
+                        contactRepo.updateAddress(firstName);
+                        break;
+                    case "4":
+                        contactRepo.updateCity(firstName);
+                        break;
+                    case "5":
+                        contactRepo.updateState(firstName);
+                        break;
+                    case "6":
+                        contactRepo.updateZip(firstName);
+                        break;
+                    case "7":
+                        contactRepo.updatePhoneNumber(firstName);
+                        break;
+                    case "8":
+                        contactRepo.updateEmail(firstName);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice try again!");
+                        break;
+
+                }
+
+            }
+
+
+        }
     }
 }

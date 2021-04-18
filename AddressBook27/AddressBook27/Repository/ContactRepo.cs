@@ -53,5 +53,219 @@ namespace AddressBook27.Repository
         }
 
 
+        public bool isPersonNameValid(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                ContactModel model = new ContactModel();
+                using (connection)
+                {
+                    string query = @"Select * from address_book;";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            model.firstName = dr.GetString(0);
+                           
+                            if (model.firstName == firstName)
+                            {
+                                return true;
+                            }
+                            /*  else if (model.bookName == bookModel.bookName && model.bookType != bookModel.bookType)
+                              {
+                                  Console.WriteLine("bookType Mismatch!");
+                              }*/
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return false;
+        }
+
+
+
+        internal void updateFirstName(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New Name");
+            string newName = Console.ReadLine();
+            string query = @"update address_book set first_name = '" + newName + "' where first_name = '" + firstName + "';";
+            Console.WriteLine(query);
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+
+        }
+
+        internal void updateLastName(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New Last Name");
+            string newLastName = Console.ReadLine();
+            string query = @"update address_book set last_name = '" + newLastName + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+        }
+
+        internal void updateAddress(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New Address");
+            string newAddress = Console.ReadLine();
+            string query = @"update address_book set address = '" + newAddress + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+
+        }
+
+        internal void updateCity(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New City");
+            string newCity = Console.ReadLine();
+            string query = @"update address_book set city = '" + newCity + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+
+        }
+
+        internal void updateState(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New State");
+            string newState = Console.ReadLine();
+            string query = @"update address_book set state = '" + newState + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+        }
+
+        internal void updateZip(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New Zip Code");
+            string newZip = Console.ReadLine();
+            string query = @"update address_book set zip = '" + newZip + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+        }
+
+        internal void updatePhoneNumber(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New Phone Number");
+            string newPhoneNumner = Console.ReadLine();
+            string query = @"update address_book set phone_number = '" + newPhoneNumner + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+        }
+
+        internal void updateEmail(string firstName)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine("Enter New Email");
+            string newEmail = Console.ReadLine();
+            string query = @"update address_book set email = '" + newEmail + "' where first_name = '" + firstName + "';";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            connection.Open();
+            var result = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                Console.WriteLine("Data Updated Sucessfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong!");
+            }
+
+        }
+
+
+
     }
 }
