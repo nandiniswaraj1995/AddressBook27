@@ -16,6 +16,7 @@ namespace AddressBook27
                 Console.WriteLine("1.AddPerson");
                 Console.WriteLine("2.Edit Existing Contact By First Name");
                 Console.WriteLine("3.Delete Contact By First Name");
+                Console.WriteLine("4.Search person by city or state in all address book");
                 Console.WriteLine("0.close");
                 Console.WriteLine("Enter your choice");
                 choice = Console.ReadLine();
@@ -36,6 +37,23 @@ namespace AddressBook27
                         Console.WriteLine("Enter person's Fisrt name whose data want to delete");
                         model.firstName = Console.ReadLine();
                         service.deleteContact(model.firstName);
+                        break;
+                    case "4":
+                        Console.WriteLine("Enter choice 1.find persons by city     2.find persons by state");
+                        int choice1 = Convert.ToInt32(Console.ReadLine());
+                        if(choice1 == 1)
+                        {
+                            Console.WriteLine("Enter city");
+                            model.city = Console.ReadLine();
+                            service.searchPersonAccrossCityOrState(model.city);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter state");
+                            model.state = Console.ReadLine();
+                            service.searchPersonAccrossCityOrState(model.city);
+
+                        }
                         break;
 
                     case "0":

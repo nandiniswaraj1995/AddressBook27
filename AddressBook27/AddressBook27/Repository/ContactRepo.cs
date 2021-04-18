@@ -363,7 +363,6 @@ namespace AddressBook27.Repository
         public bool checkDuplicateNameByBook(ContactModel contactModel)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-            Console.WriteLine(contactModel.bookName +"  "+ contactModel.firstName);
             try
             {
                 using (connection)
@@ -394,6 +393,52 @@ namespace AddressBook27.Repository
             return false;
 
         }
+
+
+        public void searchPersonAccrossCityOrState(string cityOrState)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            ContactModel model = new ContactModel();
+            try
+            {
+                using (connection)
+                {
+                    string query = @"Select * from contact where city = '" + cityOrState + "' or  state = '" + cityOrState + "';";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            model.firstName = dr.GetString(0);
+                            model.lastName = dr.GetString(1);
+                            model.address = dr.GetString(2);
+                            model.city = dr.GetString(3);
+                            model.state = dr.GetString(4);
+                            model.zip = dr.GetString(5);
+                            model.phoneNumber = dr.GetString(6);
+                            model.email = dr.GetString(7);
+                            model.bookName = dr.GetString(8);
+                            Console.Write(model.firstName+"  "+model.lastName+"  "+model.address+"  "+model.city+"  "+model.state+"  "+model.zip);
+                            Console.WriteLine(model.phoneNumber+"  "+model.email+"  "+model.bookName);
+
+                           }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No person in this city or state");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+
+        }
+
+
 
 
     }

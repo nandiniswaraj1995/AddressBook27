@@ -114,5 +114,16 @@ namespace AddressBook27
             }
 
         }
+
+
+       public void searchPersonAccrossCityOrState(string cityOrState)
+        {
+            contactRepo.searchPersonAccrossCityOrState(cityOrState);
+        }
+
+
+
+
+
     }
 }
