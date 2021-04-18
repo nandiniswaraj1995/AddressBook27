@@ -17,9 +17,14 @@ namespace AddressBook27
             {
                 contactRepo.AddBook(bookName);
             }
-
+            contactModel.bookName = bookName;
             Console.WriteLine("Enter First Name:");
             contactModel.firstName = Console.ReadLine();
+            if (contactRepo.checkDuplicateNameByBook(contactModel))
+            {
+                Console.WriteLine("person all ready exists");
+                return;
+            }
             Console.WriteLine("Enter Last Name");
             contactModel.lastName = Console.ReadLine();
             Console.WriteLine("Enter Address");
@@ -34,8 +39,7 @@ namespace AddressBook27
             contactModel.phoneNumber = Console.ReadLine();
             Console.WriteLine("Enter Email");
             contactModel.email = Console.ReadLine();
-            contactModel.bookName = bookName;
-
+           
             if (contactRepo.AddContact(contactModel))
                 Console.WriteLine("Records added successfully");
 
@@ -44,7 +48,7 @@ namespace AddressBook27
 
         internal void editContact(string firstName)
         {
-            if (!contactRepo.isPersonNameValid(firstName))
+            if (!contactRepo.GetPersonByName(firstName))
             {
                 Console.WriteLine("Person  Not Exist");
             }
@@ -100,7 +104,7 @@ namespace AddressBook27
 
         public void deleteContact(string firstName)
         {
-            if (!contactRepo.isPersonNameValid(firstName))
+            if (!contactRepo.GetPersonByName(firstName))
             {
                 Console.WriteLine("Person  Not Exist");
             }

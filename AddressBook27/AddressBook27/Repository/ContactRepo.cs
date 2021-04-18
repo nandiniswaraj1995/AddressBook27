@@ -128,16 +128,16 @@ namespace AddressBook27.Repository
         }
 
 
-        public bool isPersonNameValid(string firstName)
+        public bool GetPersonByName(string fisrtName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            ContactModel model = new ContactModel();
 
             try
             {
-                ContactModel model = new ContactModel();
                 using (connection)
                 {
-                    string query = @"Select * from contact;";
+                    string query = @"Select * from contact ;";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
@@ -147,7 +147,7 @@ namespace AddressBook27.Repository
                         {
                             model.firstName = dr.GetString(0);
                            
-                            if (model.firstName == firstName)
+                            if (model.firstName == fisrtName)
                             {
                                 return true;
                             }
@@ -171,10 +171,10 @@ namespace AddressBook27.Repository
         internal void updateFirstName(string firstName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            ContactRepo contactRepo = new ContactRepo();
             Console.WriteLine("Enter New Name");
             string newName = Console.ReadLine();
             string query = @"update contact set first_name = '" + newName + "' where first_name = '" + firstName + "';";
-            Console.WriteLine(query);
             SqlCommand cmd = new SqlCommand(query, connection);
             connection.Open();
             var result = cmd.ExecuteNonQuery();
@@ -359,6 +359,41 @@ namespace AddressBook27.Repository
 
         }
 
+
+        public bool checkDuplicateNameByBook(ContactModel contactModel)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            Console.WriteLine(contactModel.bookName +"  "+ contactModel.firstName);
+            try
+            {
+                using (connection)
+                {
+                    string query = @"Select * from contact where book_name = '"+contactModel.bookName+"' and first_name = '"+contactModel.firstName+"';";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            string name = dr.GetString(0);
+                            string book = dr.GetString(8);
+                          
+                            if (contactModel.firstName.Equals(name) && contactModel.bookName.Equals(book))
+                            {
+                                return true;
+                            }
+                           }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return false;
+
+        }
 
 
     }
